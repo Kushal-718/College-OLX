@@ -9,7 +9,7 @@ from django.contrib import messages #to display messages
 from accounts.forms import UserRegistrationForm
 from .forms import CustomLoginPage
 from .models import Product
-
+from .forms import ProductForm
 
 def login_view(request):
     form = AuthenticationForm()
@@ -79,3 +79,19 @@ def products_page(request):
             return redirect('home')  # Redirect to home page if not visited
     products = Product.objects.all()
     return render(request,'products_page.html',{'products' : products})
+
+
+
+
+@login_required
+def add_product(request):
+    if request.method == 'POST':
+        form = ProductForm(request.POST, request.FILES)
+        if form.is_valid():
+            product = form.save(commit=False)
+            product.user = request.user  # Associate the product with the logged-in user
+            product.save()
+            return redirect('product_page')  # Redirect to the product list view
+    else:
+        form = ProductForm()
+    return render(request, 'add_product.html', {'form': form})

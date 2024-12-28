@@ -133,3 +133,5 @@ AUTH_USER_MODEL = 'accounts.CustomUser'
 # Define the media root and media URL
 MEDIA_URL = '/media/'  # URL for media files
 MEDIA_ROOT = os.path.join(BASE_DIR/'media')  # Directory to store media files
+
+LOGIN_URL = '/accounts/login/'  # Replace with your login URL if different
