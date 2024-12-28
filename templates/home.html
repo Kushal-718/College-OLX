@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to Our Marketplace</title>
+    <link rel="stylesheet" href="{% static 'css/style_home.css' %}">
+</head>
+<body>
+    <header>
+        <div class="navbar">
+            <div class="logo">
+                <a href="/">Our Marketplace</a>
+            </div>
+            <nav>
+                <ul>
+                    {% if user.is_authenticated %}
+                        <li><a href="/accounts/logout/">Logout</a></li>
+                    {% else %}
+                        <li><a href="/accounts/login/">Login</a></li>
+                        <li><a href="/accounts/register/">Register</a></li>
+                         <li><a href="/accounts/products_page/">Products</a></li>
+                    {% endif %}
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section class="welcome-section">
+            <h1>Welcome to Our Marketplace!</h1>
+            <p>Discover great products and offers.</p>
+            <p>Browse through various categories and make your purchases easily and securely.</p>
+
+            {% if user.is_authenticated %}
+                <p>You're logged in as {{ user.username }}. Enjoy exploring!</p>
+            {% else %}
+                <p><a href="/accounts/login/">Log in</a> to start buying and selling products.</p>
+            {% endif %}
+        </section>
+
+        <section class="features">
+            <h2>Why Choose Our Marketplace?</h2>
+            <ul>
+                <li><a href="/accounts/products_page/">Products</a></li>
+                <li><strong>Variety of Products:</strong> Find everything you need, from electronics to home decor.</li>
+                <li><strong>Easy to Use:</strong> User-friendly interface to buy and sell items easily.</li>
+                <li><strong>Secure Transactions:</strong> Our platform ensures your transactions are safe and smooth.</li>
+            </ul>
+        </section>
+
+        <section class="cta">
+            <h3>Join Us Today!</h3>
+            <p>Become a part of our growing community and start exploring right away!</p>
+            <a href="/accounts/register/" class="btn">Register Now</a>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2024 Our Marketplace. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+</body>
+</html>

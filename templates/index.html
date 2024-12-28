@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>College OLX - Home</title>
+{% load static %}
+    <style>
+<!--        body{-->
+<!--                font-family: Arial,sans-serif;-->
+<!--                margin :0;-->
+<!--                padding: 0;-->
+<!--                background-color:url('{% static "images/login_background_img.jpg"%}' no-repeat);-->
+
+<!--        }-->
+        .container{
+            text-align: center;
+            padding : 50px;
+        }
+        h1{
+            color : #333;
+            }
+           .heading{
+            font-size:25px;
+            }
+            .register-link{
+            font-size:18px;
+            }
+        .btn{
+       padding : 10px 20px;
+       background-color : #007bff;
+       color :#fff;
+       border : none;
+       border-radius:5px;
+       text-decoration: none;
+      font-size:16px;
+      }
+        .btn:hover {
+        background-color:#0056b3;
+        padding-right:20px;
+        }
+        .register-link{
+         text-align: center;
+         padding-top:2px;
+        }
+    </style>
+<body style="background-image: url('{% static 'images/login_background_img.jpg' %}') ;background-size: cover;    background-position: center;" >
+<div class="container">
+        <div>
+        <h1>
+            Welcome to College OLX
+        </h1>
+        <p class="heading">
+            The Market Place for College Students!
+        </p>
+        <a href="{% url 'login' %}" class="btn">Login</a>
+    </div>
+<div class="register-link">
+    <p>Don't have an account? <a href="{% url 'register' %}">Register</a></p>
+</div>
+</div>
+
+
+
+</body>
+</html>
