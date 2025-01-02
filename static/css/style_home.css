@@ -1,0 +1,144 @@
+/* General Styles */
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    background-color: #f4f4f9;
+    color: #333;
+}
+
+/* Header Styles */
+header {
+    background: #007BFF;
+    color: #fff;
+    padding: 10px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.navbar .logo a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.navbar nav ul {
+    list-style: none;
+    display: flex;
+    gap: 15px;
+}
+
+.navbar nav ul li {
+    display: inline;
+}
+
+.navbar nav ul li a {
+    color: #fff;
+    text-decoration: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    transition: background 0.3s ease;
+}
+
+.navbar nav ul li a:hover {
+    background: #0056b3;
+}
+
+/* Main Section */
+main {
+    padding: 20px;
+    text-align: center;
+}
+
+/* Welcome Section */
+.welcome-section {
+    background: #e9ecef;
+    padding: 30px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.welcome-section h1 {
+    color: #007BFF;
+}
+
+.welcome-section p {
+    font-size: 1.1rem;
+}
+
+/* Features Section */
+.features {
+    padding: 20px;
+}
+
+.features h2 {
+    color: #007BFF;
+}
+
+.features ul {
+    list-style-type: disc;
+    text-align: left;
+    margin: 0 auto;
+    max-width: 600px;
+    padding: 0;
+}
+
+.features li {
+    margin: 10px 0;
+    font-size: 1.1rem;
+}
+
+.features li a {
+    color: #007BFF;
+    text-decoration: none;
+}
+
+.features li a:hover {
+    text-decoration: underline;
+}
+
+/* Call-to-Action Section */
+.cta {
+    margin: 30px auto;
+    background: #f8f9fa;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.cta h3 {
+    color: #007BFF;
+}
+
+.cta .btn {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 10px 20px;
+    background: #007BFF;
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+    border-radius: 5px;
+    transition: background 0.3s ease;
+}
+
+.cta .btn:hover {
+    background: #0056b3;
+}
+
+/* Footer Styles */
+footer {
+    background: #333;
+    color: #fff;
+    padding: 10px 0;
+    text-align: center;
+    margin-top: 20px;
+}
+
+footer p {
+    margin: 0;
+    font-size: 0.9rem;
+}
