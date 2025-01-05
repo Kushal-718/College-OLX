@@ -13,7 +13,7 @@
   <body>
   <!-- As a link -->
 <nav class="navbar navbar-light bg-light">
-  <a class="navbar-brand" href="#">CollegeKART</a>
+  <a class="navbar-brand" href="/accounts/home">CampusKART</a>
 </nav>
 <div class="container">
     {% block content %}
@@ -26,7 +26,7 @@
           <img src="  {{  product.image.url }} " class="card-img-top" alt="{{ product.name }}">
           <div class="card-body">
             <h5 class="card-title">{{ product.name }}</h5>
-            <p class="card-text"> ${{ product.price }}  Stock : {{ product.stock}} </p>
+            <p class="card-text"> Rs.{{ product.price }}  Stock : {{ product.stock}} </p>
               <div class="card-body">
                   Seller: <b>{{product.seller }}<br> </b> Posting Date : <b>{{product.created_at }}</b>
               </div >

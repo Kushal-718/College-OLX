@@ -129,3 +129,25 @@ def remove_from_cart(request, product_id):
         del cart[str(product_id)]
     request.session['cart'] = cart
     return redirect('cart_page')
+
+
+
+
+# dashboard
+from django.shortcuts import render
+from .models import SellerProfile, Badge
+
+@login_required
+def seller_dashboard(request):
+    try:
+        # Attempt to fetch the SellerProfile for the logged-in user
+        seller_profile = SellerProfile.objects.get(user=request.user)
+    except SellerProfile.DoesNotExist:
+        # If SellerProfile does not exist, create one
+        seller_profile = SellerProfile.objects.create(user=request.user)
+
+    # Now you can proceed with your dashboard logic
+    return render(request, 'dashboard.html', {'seller_profile': seller_profile})
+
+def some_view(request):
+    seller_profile, created = SellerProfile.objects.get_or_create(user=request.user)

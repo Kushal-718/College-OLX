@@ -11,12 +11,13 @@
     <header>
         <div class="navbar">
             <div class="logo">
-                <a href="/">Our Marketplace</a>
+                <a href="/">CampusKART</a>
             </div>
             <nav>
                 <ul>
                     {% if user.is_authenticated %}
-                        <li><a href="/accounts/logout/">Logout</a></li>
+                        <li><a href="/accounts">Logout</a></li>
+                    <li><a href="/accounts/dashboard">My Dashboard</a></li>
                     {% else %}
                         <li><a href="/accounts/login/">Login</a></li>
                         <li><a href="/accounts/register/">Register</a></li>
@@ -41,7 +42,7 @@
         </section>
 
         <section class="features">
-            <h2>Why Choose Our Marketplace?</h2>
+            <h2>Why Choose Our CampusKART?</h2>
             <ul>
 
                 <li><strong>Variety of Products:</strong> Find everything you need, from electronics to home decor.</li>

@@ -32,3 +32,34 @@ class Product(models.Model):#inheritance
 
 
 
+
+# models.py
+from django.db import models
+from django.contrib.auth.models import User
+
+class Badge(models.Model):
+    name = models.CharField(max_length=100)
+    description = models.TextField()
+    image = models.ImageField(upload_to="badges/")
+    criteria = models.TextField()  # Explain criteria for earning this badge.
+
+    def __str__(self):
+        return self.name
+
+# class SellerProfile(models.Model):
+#     user = models.OneToOneField(User, on_delete=models.CASCADE)
+#     badges = models.ManyToManyField(Badge, blank=True)  # Sellers can earn multiple badges.
+#     total_sales = models.IntegerField(default=0)
+#
+#     def __str__(self):
+#         return self.user.username
+
+from django.conf import settings
+
+class SellerProfile(models.Model):
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    badges = models.ManyToManyField(Badge, blank=True)  # Sellers can earn multiple badges.
+    total_sales = models.IntegerField(default=0)
+
+    def __str__(self):
+        return self.user.username
