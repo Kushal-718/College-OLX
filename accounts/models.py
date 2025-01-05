@@ -11,6 +11,12 @@ class CustomUser(AbstractUser):
 
 
 class Product(models.Model):#inheritance
+    # CATEGORY_CHOICES = [
+    #     ('book', 'Book'),
+    #     ('electronics', 'Electronics'),
+    #     ('clothing', 'Clothing'),
+    #     # Add more categories as needed
+    # ]
     seller = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     name = models.CharField(max_length=255)
     description = models.TextField()
@@ -18,6 +24,7 @@ class Product(models.Model):#inheritance
     stock = models.PositiveIntegerField()
     image = models.ImageField(upload_to='product_images/')
     created_at = models.DateTimeField(auto_now_add=True)
+    # category = models.CharField(max_length=50, choices=CATEGORY_CHOICES)
 
 
     def __str__(self):
