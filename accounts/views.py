@@ -89,9 +89,9 @@ def add_product(request):
         form = ProductForm(request.POST, request.FILES)
         if form.is_valid():
             product = form.save(commit=False)
-            product.user = request.user  # Associate the product with the logged-in user
+            product.seller = request.user  # Associate the product with the logged-in user
             product.save()
-            return redirect('product_page')  # Redirect to the product list view
+            return redirect('products_page')  # Redirect to the product list view
     else:
         form = ProductForm()
     return render(request, 'add_product.html', {'form': form})
