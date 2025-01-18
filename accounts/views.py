@@ -9,7 +9,7 @@ from django.contrib import messages #to display messages
 from accounts.forms import UserRegistrationForm
 from .forms import CustomLoginPage
 from .models import Product
-
+from .forms import ProductForm
 
 def login_view(request):
     form = AuthenticationForm()
@@ -79,3 +79,75 @@ def products_page(request):
             return redirect('home')  # Redirect to home page if not visited
     products = Product.objects.all()
     return render(request,'products_page.html',{'products' : products})
+
+
+
+
+@login_required
+def add_product(request):
+    if request.method == 'POST':
+        form = ProductForm(request.POST, request.FILES)
+        if form.is_valid():
+            product = form.save(commit=False)
+            product.seller = request.user  # Associate the product with the logged-in user
+            product.save()
+            return redirect('products_page')  # Redirect to the product list view
+    else:
+        form = ProductForm()
+    return render(request, 'add_product.html', {'form': form})
+
+
+
+# views.py for add to cart
+from django.shortcuts import render, redirect, get_object_or_404
+from .models import Product
+
+def add_to_cart(request, product_id):
+    # Fetch the cart from the session or create a new one
+    cart = request.session.get('cart', {})
+    cart[product_id] = cart.get(product_id, 0) + 1  # Increment quantity
+    request.session['cart'] = cart
+    return redirect('cart_page')  # Redirect to the cart page
+
+def cart_page(request):
+    cart = request.session.get('cart', {})
+    products = Product.objects.filter(id__in=cart.keys())
+    cart_items = [
+        {
+            'product': product,
+            'quantity': cart[str(product.id)],
+            'total_price': product.price * cart[str(product.id)],
+        }
+        for product in products
+    ]
+    cart_total = sum(item['total_price'] for item in cart_items)
+    return render(request, 'cart_page.html', {'cart_items': cart_items, 'cart_total': cart_total})
+
+def remove_from_cart(request, product_id):
+    cart = request.session.get('cart', {})
+    if str(product_id) in cart:
+        del cart[str(product_id)]
+    request.session['cart'] = cart
+    return redirect('cart_page')
+
+
+
+
+# dashboard
+from django.shortcuts import render
+from .models import SellerProfile, Badge
+
+@login_required
+def seller_dashboard(request):
+    try:
+        # Attempt to fetch the SellerProfile for the logged-in user
+        seller_profile = SellerProfile.objects.get(user=request.user)
+    except SellerProfile.DoesNotExist:
+        # If SellerProfile does not exist, create one
+        seller_profile = SellerProfile.objects.create(user=request.user)
+
+    # Now you can proceed with your dashboard logic
+    return render(request, 'dashboard.html', {'seller_profile': seller_profile})
+
+def some_view(request):
+    seller_profile, created = SellerProfile.objects.get_or_create(user=request.user)

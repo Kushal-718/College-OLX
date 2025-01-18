@@ -1,6 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from .models import CustomUser
+from .models import Product
 
 class UserRegistrationForm(UserCreationForm):
     college_email = forms.EmailField(required=True,label="College Email")
@@ -19,3 +20,12 @@ class UserRegistrationForm(UserCreationForm):
 class CustomLoginPage(AuthenticationForm):
     username = forms.CharField(max_length=255)
     password = forms.CharField(widget=forms.PasswordInput)
+
+
+
+
+
+class ProductForm(forms.ModelForm):
+    class Meta:
+        model = Product
+        fields = ['name', 'description', 'price', 'image', 'stock']

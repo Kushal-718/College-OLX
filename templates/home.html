@@ -11,16 +11,17 @@
     <header>
         <div class="navbar">
             <div class="logo">
-                <a href="/">Our Marketplace</a>
+                <a href="/">CampusKART</a>
             </div>
             <nav>
                 <ul>
                     {% if user.is_authenticated %}
-                        <li><a href="/accounts/logout/">Logout</a></li>
+                        <li><a href="/accounts">Logout</a></li>
+                    <li><a href="/accounts/dashboard">My Dashboard</a></li>
                     {% else %}
                         <li><a href="/accounts/login/">Login</a></li>
                         <li><a href="/accounts/register/">Register</a></li>
-                         <li><a href="/accounts/products_page/">Products</a></li>
+                        <li><a href="/accounts/products_page/">Products</a></li>
                     {% endif %}
                 </ul>
             </nav>
@@ -41,9 +42,9 @@
         </section>
 
         <section class="features">
-            <h2>Why Choose Our Marketplace?</h2>
+            <h2>Why Choose Our CampusKART?</h2>
             <ul>
-                <li><a href="/accounts/products_page/">Products</a></li>
+
                 <li><strong>Variety of Products:</strong> Find everything you need, from electronics to home decor.</li>
                 <li><strong>Easy to Use:</strong> User-friendly interface to buy and sell items easily.</li>
                 <li><strong>Secure Transactions:</strong> Our platform ensures your transactions are safe and smooth.</li>
@@ -53,15 +54,15 @@
         <section class="cta">
             <h3>Join Us Today!</h3>
             <p>Become a part of our growing community and start exploring right away!</p>
-            <a href="/accounts/register/" class="btn">Register Now</a>
+            <a href="/accounts/products_page/" class="btn" >View Products Page</a>
+            <a href="/accounts/add_product" class="btn">Sell Products</a>
         </section>
     </main>
 
     <footer>
         <div class="footer-content">
-            <p>&copy; 2024 Our Marketplace. All Rights Reserved.</p>
+            <p>&copy; 2024 Our MarketKART. All Rights Reserved.</p>
         </div>
     </footer>
-
 </body>
 </html>

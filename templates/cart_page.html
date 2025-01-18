@@ -1,0 +1,97 @@
+<!-- cart_page.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Cart</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+            color: #333;
+        }
+
+        div h2 {
+            text-align: center;
+            color: #333;
+            margin-top: 20px;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+            margin: 20px auto;
+            max-width: 800px;
+        }
+
+        li {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        li h3 {
+            margin: 0 0 10px 0;
+            font-size: 1.2em;
+        }
+
+        li p {
+            margin: 5px 0;
+            font-size: 0.9em;
+        }
+
+        button {
+            padding: 8px 12px;
+            font-size: 0.9em;
+            color: #fff;
+            background-color: #dc3545;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #b52d3a;
+        }
+
+        p strong {
+<!--            display: block;-->
+            text-align: right;
+            margin: 20px auto;
+            font-size: 1.2em;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <h2>Your Favourites</h2>
+    </div>
+    <ul>
+        {% for item in cart_items %}
+            <li>
+                <div>
+                    <h3>{{ item.product.name }}</h3>
+                    <p>Price: {{ item.product.price }}</p>
+                    <p>Quantity: {{ item.quantity }}</p>
+                    <p>Total: {{ item.total_price }}</p>
+                </div>
+                <form action="{% url 'remove_from_cart' item.product.id %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit" class="">Remove</button>
+                </form>
+            </li>
+        {% endfor %}
+    </ul>
+    <p><strong>Cart Total:</strong> {{ cart_total }}</p>
+</body>
+</html>
