@@ -120,5 +120,66 @@ text-decoration: underline;
     border: 1px solid #ffeeba; /* Light yellow border */
 }
 
+.badge-card {
+    background: #fff;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease;
+}
 
+.badge-card:hover {
+    transform: translateY(-5px);
+}
+
+.badge-image-container {
+    position: relative;
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+.badge-image {
+    width: 100px;
+    height: 100px;
+    object-fit: contain;
+}
+
+.grayscale {
+    filter: grayscale(100%);
+    opacity: 0.5;
+}
+
+.earned-overlay {
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    color: #28a745;
+    font-size: 24px;
+}
+
+.badge-info h4 {
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+}
+
+.badge-info p {
+    font-size: 0.9rem;
+    color: #666;
+    margin-bottom: 15px;
+}
+
+.progress {
+    height: 10px;
+    border-radius: 5px;
+    background-color: #e9ecef;
+}
+
+.progress-bar {
+    background-color: #007bff;
+    border-radius: 5px;
+}
+
+.earned {
+    border: 2px solid #28a745;
+}
 

@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Place Order</title>
+</head>
+<body>
+    <h1>Place Order for {{ product.name }}</h1>
+    <form method="POST">
+        {% csrf_token %}
+        <label for="quantity">Quantity:</label>
+        <input type="number" name="quantity" id="quantity" min="1" max="{{ product.stock }}" required>
+        <button type="submit">Place Order</button>
+    </form>
+</body>
+</html>

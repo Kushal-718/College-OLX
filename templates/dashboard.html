@@ -1,77 +1,307 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Seller Dashboard</title>
-    {% load static %}
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f5f5f5;
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Seller Dashboard - CampusKART{% endblock %}
+
+{% block extra_css %}
+<style>
+    .dashboard-container {
+        min-height: 100vh;
+        background: #f8f9fa;
+        padding: 2rem 0;
+    }
+
+    .dashboard-grid {
+        display: grid;
+        grid-template-columns: 300px 1fr;
+        gap: 2rem;
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 0 2rem;
+    }
+
+    /* Seller Profile Card */
+    .profile-card {
+        background: white;
+        border-radius: 20px;
+        padding: 2rem;
+        text-align: center;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+    }
+
+    .profile-image {
+        width: 120px;
+        height: 120px;
+        border-radius: 50%;
+        margin: 0 auto 1.5rem;
+        border: 4px solid #007bff;
+        padding: 4px;
+        object-fit: cover;
+    }
+
+    .seller-level {
+        background: linear-gradient(135deg, #007bff, #0056b3);
+        color: white;
+        padding: 0.5rem 1rem;
+        border-radius: 50px;
+        font-size: 0.9rem;
+        margin: 1rem 0;
+        display: inline-block;
+    }
+
+    /* Stats Grid */
+    .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+        margin-top: 2rem;
+    }
+
+    .stat-card {
+        background: #f8f9fa;
+        padding: 1rem;
+        border-radius: 15px;
+        text-align: center;
+    }
+
+    .stat-number {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: #007bff;
+    }
+
+    .stat-label {
+        font-size: 0.9rem;
+        color: #666;
+    }
+
+    /* Badges Section */
+    .badges-section {
+        background: white;
+        border-radius: 20px;
+        padding: 2rem;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+    }
+
+    .section-title {
+        font-size: 1.5rem;
+        color: #2c3e50;
+        margin-bottom: 1.5rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .badges-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        gap: 1.5rem;
+        margin-bottom: 2rem;
+    }
+
+    .badge-card {
+        background: white;
+        border: 2px solid #e1e8ef;
+        border-radius: 15px;
+        padding: 1.5rem;
+        text-align: center;
+        transition: all 0.3s ease;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .badge-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .badge-icon {
+        width: 80px;
+        height: 80px;
+        margin: 0 auto;
+        object-fit: contain;
+        transition: transform 0.3s ease;
+    }
+
+    .badge-card:hover .badge-icon {
+        transform: scale(1.1);
+    }
+
+    .badge-card.earned {
+        border-color: #28a745;
+        background: linear-gradient(to bottom, white, #f8fff9);
+    }
+
+    .badge-locked {
+        opacity: 0.7;
+    }
+
+    .badge-locked .badge-icon {
+        filter: grayscale(100%);
+    }
+
+    .earned-date {
+        color: #28a745;
+        font-weight: 500;
+        margin-top: auto;
+    }
+
+    /* Activity List */
+    .activity-list {
+        margin-top: 2rem;
+    }
+
+    .activity-item {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        padding: 1rem;
+        border-bottom: 1px solid #e1e8ef;
+    }
+
+    .activity-icon {
+        width: 40px;
+        height: 40px;
+        background: #e1e8ef;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #007bff;
+    }
+
+    /* Progress Section */
+    .progress {
+        height: 8px;
+        background-color: #e9ecef;
+        border-radius: 4px;
+        overflow: hidden;
+        margin: 0.5rem 0;
+    }
+
+    .progress-bar {
+        background: linear-gradient(135deg, #007bff, #0056b3);
+    }
+
+    @media (max-width: 968px) {
+        .dashboard-grid {
+            grid-template-columns: 1fr;
         }
-        .dashboard {
-            max-width: 900px;
-            margin: 20px auto;
-            padding: 20px;
-            background: white;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            border-radius: 8px;
-        }
-        .dashboard h1 {
-            font-size: 28px;
-            color: #333;
-        }
-        .profile-info {
-            margin-bottom: 20px;
-            padding: 10px;
-            background: #e9f5ff;
-            border-left: 4px solid #007bff;
-            border-radius: 4px;
-        }
-        .badges {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 20px;
-        }
-        .badge {
-            width: 150px;
-            text-align: center;
-        }
-        .badge img {
-            max-width: 100px;
-            margin-bottom: 10px;
-            border-radius: 50%;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-        }
-        .badge h3 {
-            font-size: 18px;
-            color: #555;
-        }
-    </style>
-</head>
-<body>
-    <div class="dashboard">
-        <h1>Welcome, {{ user.username }}</h1>
-        <div class="profile-info">
-            <p><strong>Total Sales:</strong> {{ profile.total_sales }}</p>
-            <p><strong>Badges Earned:</strong> {{ badges.count }}</p>
-        </div>
-        <h2>Your Badges</h2>
-        <div class="badges">
-            {% for badge in badges %}
-                <div class="badge">
-                    <img src="{{ badge.image.url }}" alt="{{ badge.name }}">
-                    <h3>{{ badge.name }}</h3>
-                    <p>{{ badge.description }}</p>
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+{% if messages %}
+    {% for message in messages %}
+    <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+        {{ message }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    {% endfor %}
+{% endif %}
+
+<div class="dashboard-container">
+    <div class="dashboard-grid">
+        <!-- Seller Profile Section -->
+        <div class="profile-card">
+            <img src="{{ seller_profile.avatar.url|default:'static/images/default_avatar.png' }}" alt="Profile" class="profile-image">
+            <h2>{{ user.username }}</h2>
+            <span class="seller-level">Level {{ seller_profile.level|default:"1" }}</span>
+
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number">{{ seller_profile.total_sales }}</div>
+                    <div class="stat-label">Total Sales</div>
                 </div>
-            {% empty %}
-                <p>No badges earned yet.</p>
-            {% endfor %}
+                <div class="stat-card">
+                    <div class="stat-number">{{ seller_profile.rating|default:"0.0" }}</div>
+                    <div class="stat-label">Rating</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">{{ seller_profile.badges.count }}</div>
+                    <div class="stat-label">Badges</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">{{ active_listings }}</div>
+                    <div class="stat-label">Active Listings</div>
+                </div>
+            </div>
+
+            <!-- Progress to Next Level -->
+            <div class="progress-section">
+                <p>Progress to Next Level</p>
+                <div class="progress">
+                    <div class="progress-bar"
+                         role="progressbar"
+                         style="width: {{ level_progress }}%"
+                         aria-valuenow="{{ level_progress }}"
+                         aria-valuemin="0"
+                         aria-valuemax="100">
+                    </div>
+                </div>
+                <small>{{ sales_to_next_level }} more sales needed</small>
+            </div>
+        </div>
+
+        <!-- Main Content Section -->
+        <div class="badges-section">
+            <h2 class="section-title">
+                <span><i class="fas fa-award"></i> Your Achievements</span>
+                <a href="{% url 'badges' %}" class="btn btn-primary btn-sm">View All Badges</a>
+            </h2>
+
+            <div class="badges-grid">
+                {% for badge_status in badges_with_status %}
+                <div class="badge-card {% if badge_status.earned %}earned{% else %}badge-locked{% endif %}">
+                    <img src="{{ badge_status.badge.image.url }}"
+                         alt="{{ badge_status.badge.name }}"
+                         class="badge-icon">
+                    <h3>{{ badge_status.badge.name }}</h3>
+                    <p>{{ badge_status.badge.description }}</p>
+                    {% if not badge_status.earned %}
+                    <div class="progress">
+                        <div class="progress-bar"
+                             role="progressbar"
+                             style="width: {{ badge_status.progress }}%"
+                             aria-valuenow="{{ badge_status.progress }}"
+                             aria-valuemin="0"
+                             aria-valuemax="100">
+                            {{ badge_status.progress|floatformat:0 }}%
+                        </div>
+                    </div>
+                    {% else %}
+                    <p class="earned-date">Earned!</p>
+                    {% endif %}
+                </div>
+                {% empty %}
+                <div class="no-badges">
+                    <p>No badges available yet. Start selling to earn badges!</p>
+                </div>
+                {% endfor %}
+            </div>
+
+            <!-- Recent Activity -->
+            <div class="activity-list">
+                <h3 class="section-title">
+                    <i class="fas fa-history"></i> Recent Activity
+                </h3>
+                {% for activity in recent_activities %}
+                <div class="activity-item">
+                    <div class="activity-icon">
+                        <i class="fas {{ activity.icon }}"></i>
+                    </div>
+                    <div>
+                        <strong>{{ activity.action }}</strong>
+                        <p>{{ activity.timestamp|timesince }} ago</p>
+                    </div>
+                </div>
+                {% empty %}
+                <p>No recent activity</p>
+                {% endfor %}
+            </div>
         </div>
     </div>
-</body>
-</html>
-
+</div>
+{% endblock %}

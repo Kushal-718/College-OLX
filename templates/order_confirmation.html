@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="card">
+        <div class="card-body text-center">
+            <i class="fas fa-check-circle text-success fa-3x mb-3"></i>
+            <h2>Order Placed Successfully!</h2>
+            <p class="lead">Thank you for your purchase.</p>
+            <hr>
+            <div class="order-details">
+                <h4>Order Details</h4>
+                <p><strong>Order ID:</strong> #{{ order.id }}</p>
+                <p><strong>Product:</strong> {{ order.product.name }}</p>
+                <p><strong>Quantity:</strong> {{ order.quantity }}</p>
+                <p><strong>Total Price:</strong> ${{ order.total_price }}</p>
+                <p><strong>Seller:</strong> {{ order.product.seller.username }}</p>
+                <p><strong>Order Date:</strong> {{ order.created_at|date:"F j, Y, g:i a" }}</p>
+            </div>
+            <div class="mt-4">
+                <a href="{% url 'dashboard' %}" class="btn btn-primary">Go to Dashboard</a>
+                <a href="{% url 'products_page' %}" class="btn btn-outline-primary">Continue Shopping</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

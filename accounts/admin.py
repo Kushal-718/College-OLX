@@ -15,15 +15,24 @@ class ProductAdmin(admin.ModelAdmin):
 admin.site.register(CustomUser,CustomUserAdmin)
 admin.site.register(Product,ProductAdmin)
 
-
-# admin.py
 from django.contrib import admin
-from .models import Badge, SellerProfile
+from .models import Badge, SellerProfile, BadgeAward
 
-@admin.register(Badge)
-class BadgeAdmin(admin.ModelAdmin):
-    list_display = ('name', 'criteria')
+admin.site.register(Badge)
+admin.site.register(SellerProfile)
+admin.site.register(BadgeAward)
+# # admin.py
+# from django.contrib import admin
+# from .models import Badge, SellerProfile
+#
+# @admin.register(Badge)
+# class BadgeAdmin(admin.ModelAdmin):
+#     list_display = ('name', 'description')
+#
+# @admin.register(SellerProfile)
+# class SellerProfileAdmin(admin.ModelAdmin):
+#     list_display = ('user', 'total_sales')
 
-@admin.register(SellerProfile)
-class SellerProfileAdmin(admin.ModelAdmin):
-    list_display = ('user', 'total_sales')
+
+# admin.site.register(SellerProfile,SellerProfileAdmin)
+# admin.site.register(Badge,BadgeAdmin)

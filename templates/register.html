@@ -1,140 +1,228 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Registration-Form</title>
-    {% load static %}
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
-    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
-    <style>
-        body {
-            background-image: url('{% static "images/login_background_img.jpg" %}');
-            background-size: cover;
-            background-position: center;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-            font-family: Arial, sans-serif;
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Register - CampusKART{% endblock %}
+
+{% block extra_css %}
+<link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+<style>
+    body {
+        background: linear-gradient(135deg, rgba(0, 123, 255, 0.1), rgba(0, 86, 179, 0.1)),
+                    url('{% static "images/login_background_img.jpg" %}') center/cover no-repeat fixed;
+    }
+
+    .register-container {
+        min-height: calc(100vh - 180px);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 2rem;
+    }
+
+    .register-card {
+        background: rgba(255, 255, 255, 0.95);
+        border-radius: 20px;
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+        padding: 3rem;
+        width: 100%;
+        max-width: 500px;
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .register-header {
+        text-align: center;
+        margin-bottom: 2.5rem;
+    }
+
+    .register-header h1 {
+        font-size: 2.5rem;
+        color: #2c3e50;
+        font-weight: 700;
+        margin-bottom: 1rem;
+    }
+
+    .register-header p {
+        color: #666;
+        font-size: 1.1rem;
+    }
+
+    .input-group {
+        position: relative;
+        margin-bottom: 1.5rem;
+    }
+
+    .input-group input {
+        width: 100%;
+        padding: 1rem 1rem 1rem 3rem;
+        border: 2px solid #e1e1e1;
+        border-radius: 12px;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+        background: rgba(255, 255, 255, 0.9);
+    }
+
+    .input-group input:focus {
+        border-color: #007bff;
+        box-shadow: 0 0 0 4px rgba(0, 123, 255, 0.1);
+        outline: none;
+    }
+
+    .input-group i {
+        position: absolute;
+        left: 1rem;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #666;
+        font-size: 1.2rem;
+        transition: color 0.3s ease;
+    }
+
+    .input-group input:focus + i {
+        color: #007bff;
+    }
+
+    .register-button {
+        width: 100%;
+        padding: 1rem;
+        background: linear-gradient(135deg, #007bff, #0056b3);
+        color: white;
+        border: none;
+        border-radius: 12px;
+        font-size: 1.1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        margin-top: 1rem;
+    }
+
+    .register-button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(0, 123, 255, 0.3);
+    }
+
+    .login-link {
+        text-align: center;
+        margin-top: 1.5rem;
+        color: #666;
+    }
+
+    .login-link a {
+        color: #007bff;
+        font-weight: 600;
+        text-decoration: none;
+    }
+
+    .login-link a:hover {
+        text-decoration: underline;
+    }
+
+    .alert-error {
+        background: #fff1f1;
+        border-left: 4px solid #ff4444;
+        color: #dc3545;
+        padding: 1rem;
+        border-radius: 8px;
+        margin-top: 1rem;
+        font-size: 0.9rem;
+    }
+
+    .password-requirements {
+        background: #f8f9fa;
+        padding: 1rem;
+        border-radius: 8px;
+        margin: 1rem 0;
+        font-size: 0.9rem;
+        color: #666;
+    }
+
+    .password-requirements ul {
+        list-style: none;
+        padding-left: 0;
+        margin: 0.5rem 0 0 0;
+    }
+
+    .password-requirements li {
+        margin: 0.3rem 0;
+        display: flex;
+        align-items: center;
+    }
+
+    .password-requirements li i {
+        margin-right: 0.5rem;
+        font-size: 1rem;
+    }
+
+    @media (max-width: 576px) {
+        .register-card {
+            padding: 2rem;
         }
 
-        .wrapper {
-            background: rgba(255, 255, 255, 0.9); /* Semi-transparent background */
-            padding: 20px 40px;
-            border-radius: 10px;
-            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
-            width: 100%;
-            max-width: 400px;
-            text-align: center;
+        .register-header h1 {
+            font-size: 2rem;
         }
+    }
+</style>
+{% endblock %}
 
-        .wrapper h1 {
-            font-size: 24px;
-            color: black; /* Changed text color to black */
-            margin-bottom: 20px;
-        }
-
-        .input-box {
-            position: relative;
-            margin-bottom: 20px;
-        }
-
-        .input-box input {
-            width: 100%;
-            padding: 12px 40px 12px 15px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            font-size: 16px;
-            background: #f9f9f9;
-            color: black; /* Changed input text color to black */
-            box-sizing: border-box;
-        }
-
-        .input-box i {
-            position: absolute;
-            right: 15px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: #aaa;
-        }
-
-        .btn {
-            width: 100%;
-            padding: 12px;
-            background: #007bff;
-            color: white;
-            font-size: 16px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background 0.3s;
-        }
-
-        .btn:hover {
-            background: #0056b3;
-        }
-
-        .alert-error {
-            margin-top: 15px;
-            background: #f8d7da;
-            color: black; /* Changed error text color to black */
-            padding: 10px;
-            border: 1px solid #f5c6cb;
-            border-radius: 5px;
-            font-size: 14px;
-        }
-
-        .alert-error p {
-            margin: 5px 0;
-        }
-    </style>
-</head>
-<body>
-<div class="wrapper">
-    <h1>Registration</h1>
-    <form method="POST" action="{% url 'register' %}">
-        {% csrf_token %}
-        <div class="input-box">
-            <input type="text" placeholder="Username" name="username" id="username" required>
-            <i class="bx bxs-user"></i>
+{% block content %}
+<div class="register-container">
+    <div class="register-card">
+        <div class="register-header">
+            <h1>Create Account</h1>
+            <p>Join our community today!</p>
         </div>
 
-        <div class="input-box">
-            <input type="email" placeholder="College Mail ID" name="college_email" id="college-email" required>
-            <i class="bx bxs-envelope"></i>
-        </div>
+        <form method="POST" action="{% url 'register' %}">
+            {% csrf_token %}
+            
+            <div class="input-group">
+                <input type="text" placeholder="Username" name="username" id="username" required>
+                <i class="bx bxs-user"></i>
+            </div>
 
-        <div class="input-box">
-            <input type="password" placeholder="Password" name="password1" id="password" required>
-            <i class="bx bxs-lock-alt"></i>
-        </div>
+            <div class="input-group">
+                <input type="email" placeholder="College Email" name="college_email" id="college-email" required>
+                <i class="bx bxs-envelope"></i>
+            </div>
 
-        <div class="input-box">
-            <input type="password" placeholder="Re-Enter Password" name="password2" id="re-password" required>
-            <i class="bx bxs-lock-alt"></i>
-        </div>
+            <div class="input-group">
+                <input type="password" placeholder="Password" name="password1" id="password" required>
+                <i class="bx bxs-lock-alt"></i>
+            </div>
 
-        <div>
-            <button class="btn" type="submit">Sign Up</button>
-        </div>
-    </form>
+            <div class="input-group">
+                <input type="password" placeholder="Confirm Password" name="password2" id="re-password" required>
+                <i class="bx bxs-lock-alt"></i>
+            </div>
 
-    {% if form.errors %}
-    <div class="alert-error">
-        {% for field, errors in form.errors.items %}
-        <p><strong>{{ field }}:</strong></p>
-        {% for error in errors %}
-        <p>{{ error }}</p>
-        {% endfor %}
-        {% endfor %}
+            <div class="password-requirements">
+                <strong>Password Requirements:</strong>
+                <ul>
+                    <li><i class='bx bx-check-circle'></i>At least 8 characters long</li>
+                    <li><i class='bx bx-check-circle'></i>Contains uppercase & lowercase letters</li>
+                    <li><i class='bx bx-check-circle'></i>Includes numbers or special characters</li>
+                </ul>
+            </div>
+
+            <button type="submit" class="register-button">
+                Create Account
+            </button>
+        </form>
+
+        {% if form.errors %}
+        <div class="alert-error">
+            {% for field, errors in form.errors.items %}
+                {% for error in errors %}
+                    <p>{{ error }}</p>
+                {% endfor %}
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        <div class="login-link">
+            Already have an account? <a href="{% url 'login' %}">Login</a>
+        </div>
     </div>
-    {% endif %}
-    {% if form.college_email.errors %}
-    <div class="alert-error">
-        {{ form.college_email.errors }}
-    </div>
-    {% endif %}
 </div>
-</body>
-</html>
+{% endblock %}

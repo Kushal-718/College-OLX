@@ -1,0 +1,219 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ product.name }} - CampusKART{% endblock %}
+
+{% block extra_css %}
+<style>
+    .product-detail {
+        padding-top: 1rem;
+        background: #f8f9fa;
+        min-height: 100vh;
+    }
+
+    .back-button {
+        padding: 0.5rem 1rem;
+        border-radius: 50px;
+        transition: all 0.3s ease;
+    }
+
+    .back-button:hover {
+        background-color: #6c757d;
+        color: white;
+        transform: translateX(-5px);
+    }
+
+    .product-image {
+        width: 100%;
+        height: 400px;
+        object-fit: cover;
+        border-radius: 15px;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+
+    .product-info {
+        padding: 2rem;
+        background: white;
+        border-radius: 15px;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+
+    .price {
+        font-size: 2rem;
+        color: #007bff;
+        font-weight: bold;
+    }
+
+    .stock-info {
+        display: inline-block;
+        padding: 0.5rem 1rem;
+        border-radius: 50px;
+        font-size: 0.9rem;
+        margin: 1rem 0;
+    }
+
+    .in-stock {
+        background: #d4edda;
+        color: #155724;
+    }
+
+    .low-stock {
+        background: #fff3cd;
+        color: #856404;
+    }
+
+    .out-of-stock {
+        background: #f8d7da;
+        color: #721c24;
+    }
+
+    .seller-info {
+        padding: 1rem;
+        border: 1px solid #dee2e6;
+        border-radius: 10px;
+        margin: 1rem 0;
+    }
+
+    .quantity-input {
+        max-width: 100px;
+        padding: 0.5rem;
+        border: 1px solid #ced4da;
+        border-radius: 5px;
+        margin-right: 1rem;
+    }
+
+    .buy-button {
+        padding: 0.75rem 2rem;
+        font-size: 1.1rem;
+        transition: all 0.3s ease;
+    }
+
+    .buy-button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+
+    .description {
+        white-space: pre-line;
+        line-height: 1.6;
+    }
+
+    .created-date {
+        font-size: 0.9rem;
+        color: #6c757d;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="product-detail">
+    <div class="container">
+        <!-- Back Button -->
+        <div class="mb-4">
+            <a href="{% url 'products_page' %}" class="btn btn-outline-secondary back-button">
+                <i class="fas fa-arrow-left"></i> Back to Products
+            </a>
+        </div>
+
+        {% if messages %}
+            {% for message in messages %}
+            <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            {% endfor %}
+        {% endif %}
+
+        <div class="row">
+            <!-- Product Image -->
+            <div class="col-md-6 mb-4">
+                <img src="{{ product.image.url }}" alt="{{ product.name }}" class="product-image">
+            </div>
+
+            <!-- Product Information -->
+            <div class="col-md-6">
+                <div class="product-info">
+                    <h1 class="mb-3">{{ product.name }}</h1>
+
+                    <div class="price mb-3">${{ product.price }}</div>
+
+                    {% if product.stock > 10 %}
+                        <div class="stock-info in-stock">
+                            <i class="fas fa-check-circle"></i> In Stock ({{ product.stock }} available)
+                        </div>
+                    {% elif product.stock > 0 %}
+                        <div class="stock-info low-stock">
+                            <i class="fas fa-exclamation-circle"></i> Low Stock (Only {{ product.stock }} left)
+                        </div>
+                    {% else %}
+                        <div class="stock-info out-of-stock">
+                            <i class="fas fa-times-circle"></i> Out of Stock
+                        </div>
+                    {% endif %}
+
+                    <!-- Seller Information -->
+                    <div class="seller-info">
+                        <h5><i class="fas fa-user"></i> Seller Information</h5>
+                        <p class="mb-1">{{ product.seller.username }}</p>
+                        <p class="mb-0">Member since: {{ product.seller.date_joined|date:"F Y" }}</p>
+                    </div>
+
+                    <!-- Purchase Form -->
+                    {% if product.stock > 0 and request.user != product.seller %}
+                        <form method="POST" action="{% url 'place_order' product.id %}" class="mt-4">
+                            {% csrf_token %}
+                            <div class="d-flex align-items-center mb-3">
+                                <label for="quantity" class="me-3">Quantity:</label>
+                                <input type="number"
+                                       name="quantity"
+                                       id="quantity"
+                                       class="quantity-input"
+                                       min="1"
+                                       max="{{ product.stock }}"
+                                       value="1"
+                                       required>
+                            </div>
+                            <button type="submit" class="btn btn-primary buy-button">
+                                <i class="fas fa-shopping-cart"></i> Buy Now
+                            </button>
+                        </form>
+                    {% elif request.user == product.seller %}
+                        <div class="alert alert-info mt-3">
+                            <i class="fas fa-info-circle"></i> This is your product listing
+                        </div>
+                    {% endif %}
+
+                    <!-- Product Description -->
+                    <div class="mt-4">
+                        <h4>Description</h4>
+                        <p class="description">{{ product.description }}</p>
+                    </div>
+
+                    <p class="created-date mt-3">
+                        Listed on {{ product.created_at|date:"F j, Y" }}
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    // Quantity input validation
+    document.getElementById('quantity').addEventListener('change', function(e) {
+        const max = parseInt(this.getAttribute('max'));
+        const min = parseInt(this.getAttribute('min'));
+        let value = parseInt(this.value);
+
+        if (value > max) {
+            this.value = max;
+            alert('Maximum available quantity is ' + max);
+        }
+        if (value < min) {
+            this.value = min;
+        }
+    });
+</script>
+{% endblock %}

@@ -1,0 +1,122 @@
+[
+    {
+        "model": "accounts.badge",
+        "pk": 1,
+        "fields": {
+            "name": "First Sale",
+            "description": "Congratulations on your first sale!",
+            "image": "badges/first_sale.png",
+            "requirement": 1,
+            "category": "SALES",
+            "created_at": "2024-01-19T00:00:00Z"
+        }
+    },
+    {
+        "model": "accounts.badge",
+        "pk": 2,
+        "fields": {
+            "name": "Rising Star",
+            "description": "Complete 10 successful sales",
+            "image": "badges/rising_star.png",
+            "requirement": 10,
+            "category": "SALES",
+            "created_at": "2024-01-19T00:00:00Z"
+        }
+    },
+    {
+        "model": "accounts.badge",
+        "pk": 3,
+        "fields": {
+            "name": "Super Seller",
+            "description": "Complete 50 successful sales",
+            "image": "badges/super_seller.png",
+            "requirement": 50,
+            "category": "SALES",
+            "created_at": "2024-01-19T00:00:00Z"
+        }
+    },
+    {
+        "model": "accounts.badge",
+        "pk": 4,
+        "fields": {
+            "name": "Elite Seller",
+            "description": "Complete 100 successful sales",
+            "image": "badges/elite_seller.png",
+            "requirement": 100,
+            "category": "SALES",
+            "created_at": "2024-01-19T00:00:00Z"
+        }
+    },
+    {
+        "model": "accounts.badge",
+        "pk": 5,
+        "fields": {
+            "name": "Top Rated",
+            "description": "Maintain a 4.5+ rating for 30 days",
+            "image": "badges/top_rated.png",
+            "requirement": 45,
+            "category": "RATING",
+            "created_at": "2024-01-19T00:00:00Z"
+        }
+    },
+    {
+        "model": "accounts.badge",
+        "pk": 6,
+        "fields": {
+            "name": "Quick Response",
+            "description": "Average response time under 2 hours",
+            "image": "badges/quick_response.png",
+            "requirement": 2,
+            "category": "PERFORMANCE",
+            "created_at": "2024-01-19T00:00:00Z"
+        }
+    },
+    {
+        "model": "accounts.badge",
+        "pk": 7,
+        "fields": {
+            "name": "Textbook Expert",
+            "description": "Complete 10 textbook sales",
+            "image": "badges/textbook_expert.png",
+            "requirement": 10,
+            "category": "CATEGORY",
+            "created_at": "2024-01-19T00:00:00Z"
+        }
+    },
+    {
+        "model": "accounts.badge",
+        "pk": 8,
+        "fields": {
+            "name": "Furniture Expert",
+            "description": "Complete 10 furniture sales",
+            "image": "badges/furniture_expert.png",
+            "requirement": 10,
+            "category": "CATEGORY",
+            "created_at": "2024-01-19T00:00:00Z"
+        }
+    },
+    {
+        "model": "accounts.badge",
+        "pk": 9,
+        "fields": {
+            "name": "Electronics Expert",
+            "description": "Complete 10 electronics sales",
+            "image": "badges/electronics_expert.png",
+            "requirement": 10,
+            "category": "CATEGORY",
+            "created_at": "2024-01-19T00:00:00Z"
+        }
+    },
+    {
+        "model": "accounts.badge",
+        "pk": 10,
+        "fields": {
+            "name": "Verified Seller",
+            "description": "Complete identity verification",
+            "image": "badges/verified_seller.png",
+            "requirement": 1,
+            "category": "SPECIAL",
+            "created_at": "2024-01-19T00:00:00Z"
+        }
+    }
+]

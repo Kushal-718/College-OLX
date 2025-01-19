@@ -1,0 +1,165 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block extra_css %}
+<style>
+    .badge-card {
+        background: white;
+        border-radius: 15px;
+        padding: 1.5rem;
+        height: 100%;  /* Make all cards same height */
+        box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+        transition: transform 0.3s ease;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .badge-card:hover {
+        transform: translateY(-5px);
+    }
+
+    .badge-card.earned {
+        border: 2px solid #28a745;
+    }
+
+    .badge-image-container {
+        position: relative;
+        text-align: center;
+        margin-bottom: 1rem;
+        flex-shrink: 0;  /* Prevent image from shrinking */
+    }
+
+    .badge-image {
+        width: 120px;
+        height: 120px;
+        object-fit: contain;
+    }
+
+    .grayscale {
+        filter: grayscale(100%);
+        opacity: 0.5;
+    }
+
+    .earned-overlay {
+        position: absolute;
+        top: -10px;
+        right: -10px;
+        background: #28a745;
+        color: white;
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    }
+
+    .badge-info {
+        flex-grow: 1;  /* Allow info section to grow */
+        display: flex;
+        flex-direction: column;
+    }
+
+    .badge-info h4 {
+        font-size: 1.2rem;
+        margin-bottom: 0.5rem;
+        color: #2c3e50;
+    }
+
+    .badge-info p {
+        font-size: 0.9rem;
+        color: #666;
+        margin-bottom: 1rem;
+        flex-grow: 1;  /* Push progress bar to bottom */
+    }
+
+    .progress {
+        height: 10px;
+        background-color: #e9ecef;
+        border-radius: 5px;
+        margin-top: auto;  /* Push to bottom of info section */
+    }
+
+    .progress-bar {
+        background: linear-gradient(135deg, #007bff, #0056b3);
+        border-radius: 5px;
+    }
+
+    /* Page Header */
+    .badges-header {
+        text-align: center;
+        padding: 2rem;
+        background: linear-gradient(135deg, #007bff, #0056b3);
+        color: white;
+        border-radius: 15px;
+        margin-bottom: 3rem;
+    }
+
+    .badges-header h2 {
+        margin-bottom: 1rem;
+    }
+
+    .badges-header p {
+        opacity: 0.9;
+        margin-bottom: 0;
+    }
+
+    /* Badge Grid */
+    .badges-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 2rem;
+        padding: 1rem;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+        .badges-grid {
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="badges-header">
+        <h2>Your Achievements</h2>
+        <p>Track your progress and unlock new badges!</p>
+    </div>
+
+    <div class="badges-grid">
+        {% for badge_status in badges_with_status %}
+        <div class="badge-card {% if badge_status.earned %}earned{% endif %}">
+            <div class="badge-image-container">
+                <img src="{{ badge_status.badge.image.url }}"
+                     alt="{{ badge_status.badge.name }}"
+                     class="badge-image {% if not badge_status.earned %}grayscale{% endif %}">
+                {% if badge_status.earned %}
+                <div class="earned-overlay">
+                    <i class="fas fa-check-circle"></i>
+                </div>
+                {% endif %}
+            </div>
+            <div class="badge-info">
+                <h4>{{ badge_status.badge.name }}</h4>
+                <p>{{ badge_status.badge.description }}</p>
+                {% if not badge_status.earned %}
+                <div class="progress">
+                    <div class="progress-bar"
+                         role="progressbar"
+                         style="width: {{ badge_status.progress }}%"
+                         aria-valuenow="{{ badge_status.progress }}"
+                         aria-valuemin="0"
+                         aria-valuemax="100">
+                        {{ badge_status.progress|floatformat:0 }}%
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

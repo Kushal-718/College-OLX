@@ -1,0 +1,168 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Logged Out - CampusKART{% endblock %}
+
+{% block extra_css %}
+<style>
+    .logout-container {
+        min-height: calc(100vh - 300px);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 2rem;
+        background: linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.9)),
+                    url('{% static "images/login_background_img.jpg" %}');
+        background-size: cover;
+        background-position: center;
+    }
+
+    .logout-card {
+        background: white;
+        padding: 3rem;
+        border-radius: 20px;
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+        text-align: center;
+        max-width: 500px;
+        width: 100%;
+        animation: slideIn 0.5s ease;
+    }
+
+    .logout-icon {
+        font-size: 4rem;
+        color: #28a745;
+        margin-bottom: 1.5rem;
+    }
+
+    .logout-title {
+        font-size: 2rem;
+        color: #2c3e50;
+        margin-bottom: 1rem;
+        font-weight: 600;
+    }
+
+    .logout-message {
+        color: #666;
+        font-size: 1.1rem;
+        margin-bottom: 2rem;
+        line-height: 1.6;
+    }
+
+    .btn-group {
+        display: flex;
+        gap: 1rem;
+        justify-content: center;
+    }
+
+    .btn {
+        padding: 0.8rem 2rem;
+        border-radius: 50px;
+        font-size: 1.1rem;
+        font-weight: 500;
+        text-decoration: none;
+        transition: all 0.3s ease;
+    }
+
+    .btn-primary {
+        background: linear-gradient(135deg, #007bff, #0056b3);
+        color: white;
+        border: none;
+    }
+
+    .btn-outline {
+        border: 2px solid #007bff;
+        color: #007bff;
+        background: transparent;
+    }
+
+    .btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(0, 123, 255, 0.3);
+    }
+
+    .additional-links {
+        margin-top: 2rem;
+        padding-top: 2rem;
+        border-top: 1px solid #eee;
+    }
+
+    .additional-links p {
+        color: #666;
+        margin-bottom: 1rem;
+    }
+
+    .social-links {
+        display: flex;
+        justify-content: center;
+        gap: 1rem;
+    }
+
+    .social-links a {
+        color: #666;
+        font-size: 1.5rem;
+        transition: color 0.3s ease;
+    }
+
+    .social-links a:hover {
+        color: #007bff;
+    }
+
+    @keyframes slideIn {
+        from {
+            opacity: 0;
+            transform: translateY(-20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    @media (max-width: 768px) {
+        .logout-card {
+            padding: 2rem;
+        }
+
+        .btn-group {
+            flex-direction: column;
+        }
+
+        .btn {
+            width: 100%;
+            text-align: center;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="logout-container">
+    <div class="logout-card">
+        <i class="fas fa-check-circle logout-icon"></i>
+        <h1 class="logout-title">Successfully Logged Out</h1>
+        <p class="logout-message">
+            Thank you for using CampusKART! You have been successfully logged out of your account.
+            We hope to see you again soon.
+        </p>
+        
+        <div class="btn-group">
+            <a href="{% url 'login' %}" class="btn btn-primary">
+                <i class="fas fa-sign-in-alt"></i> Log In Again
+            </a>
+            <a href="{% url 'home' %}" class="btn btn-outline">
+                <i class="fas fa-home"></i> Back to Home
+            </a>
+        </div>
+
+        <div class="additional-links">
+            <p>Stay connected with us</p>
+            <div class="social-links">
+                <a href="#"><i class="fab fa-facebook"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-linkedin"></i></a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
